@@ -1,0 +1,21 @@
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    networks:
+      ag_network:
+        ipv4_address: 10.0.10.65
+    volumes:
+      - workdir:/opt/adguardhome/work
+      - confdir:/opt/adguardhome/conf
+    # Note: No "ports" section needed! 
+    # Macvlan exposes all ports directly on the assigned IP.
+
+networks:
+  ag_network:
+    external: true
+
+volumes:
+  workdir:
+  confdir:
