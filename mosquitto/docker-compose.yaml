@@ -1,0 +1,14 @@
+services:
+    eclipse-mosquitto:
+        restart: unless-stopped
+        ports:
+            - 1883:1883
+        volumes:
+            - config:/mosquitto/config
+            - data:/mosquitto/data
+            - log:/mosquitto/log
+        image: eclipse-mosquitto
+volumes:
+    config:
+    data:
+    log:
