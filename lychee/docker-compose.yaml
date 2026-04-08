@@ -1,0 +1,21 @@
+services:
+  lychee:
+    image: lscr.io/linuxserver/lychee:latest
+    container_name: lychee
+    environment:
+#      - PUID=1000
+#      - PGID=1000
+      - TZ=Europe/Berlin
+      - DB_CONNECTION=sqlite
+      - APP_NAME=Gallery #optional
+      - APP_URL=URL #optional
+      - TRUSTED_PROXIES=* #optional
+    volumes:
+      - config:/config
+      - pictures:/pictures
+    ports:
+      - 2953:80
+    restart: unless-stopped
+volumes:
+  config:
+  pictures:
