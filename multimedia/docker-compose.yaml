@@ -1,0 +1,72 @@
+services:
+  beets:
+    image: lscr.io/linuxserver/beets
+    ports:
+      - "48337:8337"
+    volumes:
+      - /data13/Music:/music
+      - /data13/Ingest:/downloads
+      - beets-config:/config
+    restart: unless-stopped
+
+  navidrome:
+    image: deluan/navidrome
+    ports:
+      - "4533:4533"
+    environment:
+      - ND_LASTFM_APIKEY=SECRET
+      - ND_LASTFM_SECRET=SECRET
+      - ND_LASTFM_LANGUAGE=EN
+      - ND_SPOTIFY_ID=SECRET
+      - ND_SPOTIFY_SECRET=SECRET
+    volumes:
+      - /data13/Music:/music
+      - navidrome-config:/data
+    restart: unless-stopped
+
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - transmission-config:/config
+      - /data13/Downloads:/downloads #optional
+      - /data13/WatchFolder:/watch #optional
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    ports:
+      - 13378:80
+    volumes:
+      - /data13/Audiobooks:/audiobooks
+      - /data13/Podcasts:/podcasts
+      - abs-config:/config
+      - abs-metadata:/metadata
+    environment:
+      - TZ=Europe/Berlin
+
+  podfetch:
+    image: samuel19982/podfetch:latest
+    ports:
+      - "480:8000"
+    volumes:
+      - /data13/Podcasts:/app/podcasts
+      - podfetch-db:/app/db
+    environment:
+      - POLLING_INTERVAL=60
+      - SERVER_URL=http://localhost:480
+      - DATABASE_URL=sqlite:///app/db/podcast.db
+
+volumes:
+  beets-config:
+  navidrome-config:
+  transmission-config:
+  podfetch-db:
+  abs-config:
+  abs-metadata:
