@@ -1,0 +1,29 @@
+services:
+  mc:
+    image: itzg/minecraft-server:latest
+    pull_policy: daily
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      MEMORY: "4096M"
+      MAX_PLAYERS: "69"
+      MOTD: "Minecraft Server running on phoenix docker"
+      USE_AIKAR_FLAGS: "true"
+      USE_MEOWICE_FLAGS: "true"
+      TZ: "Europe/Berlin"
+      FORCE_GAMEMODE: "true"
+      ENABLE_COMMAND_BLOCK: "true"
+      SIMULATION_DISTANCE: "12"
+      VIEW_DISTANCE: "12"
+      OPS: |-
+        NICK
+      ENABLE_WHITELIST: "true"
+      WHITELIST: |-
+        NICK
+      PREVIEWS_CHAT: "true"
+    volumes:
+      # attach the relative directory 'data' to the container's /data path
+      - ./data:/data
