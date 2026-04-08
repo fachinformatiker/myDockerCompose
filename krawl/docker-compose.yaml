@@ -1,0 +1,15 @@
+ervices:
+  krawl:
+    image: ghcr.io/blessedrebus/krawl:latest
+    container_name: krawl-server
+    ports:
+      - "5040:5000"
+    environment:
+      - CONFIG_LOCATION=config.yaml
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - krawl-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  krawl-data:
