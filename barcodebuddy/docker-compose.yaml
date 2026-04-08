@@ -1,0 +1,14 @@
+name: barcodebuddy
+services:
+    barcodebuddy:
+        volumes:
+            - bbconfig:/config
+        ports:
+            - 2394:80
+            - 2093:443
+        restart: unless-stopped
+        environment:
+            - TZ=Europe/Berlin
+        image: f0rc3/barcodebuddy:latest
+volumes:
+    bbconfig:
