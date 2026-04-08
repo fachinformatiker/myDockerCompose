@@ -1,0 +1,12 @@
+services:
+  netbootxyz:
+    image: netbootxyz/netbootxyz
+    container_name: netbootxyz
+    volumes:
+      - ./config:/config
+      - ./assets:/assets
+    ports:
+      - 3000:3000     # Web UI for configuration
+      - 69:69/udp     # TFTP Service (Crucial for PXE)
+      - 2340:80       # HTTP Service (Where it pulls images)
+    restart: unless-stopped
