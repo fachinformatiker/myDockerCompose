@@ -1,0 +1,13 @@
+services:
+    feishin:
+        container_name: feishin
+        image: 'ghcr.io/jeffvli/feishin:latest'
+        restart: unless-stopped
+        environment:
+            - SERVER_NAME=Navidrome # pre-defined server name
+            - SERVER_LOCK=true # When true AND name/type/url are set, only username/password can be toggled
+            - SERVER_TYPE=navidrome # the allowed types are: jellyfin, navidrome, subsonic. These values are case insensitive
+            - SERVER_URL=http://192.168.0.145:4533 # http://address:port or https://address:port
+        ports:
+            - 9180:9180
+            # Alternatively, to restrict to only localhost, - 127.0.0.1:9180:8190
