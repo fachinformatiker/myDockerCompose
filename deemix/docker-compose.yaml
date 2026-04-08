@@ -1,0 +1,18 @@
+services:
+  deemix:
+    container_name: Deemix
+    image: ghcr.io/bambanah/deemix
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=022
+      - DISABLE_OWNERSHIP_CHECK=true
+      - DISABLE_OWNERSHIP_CHECK_MUSIC=true
+    ports:
+      - 6595:6595
+    volumes:
+      - deemix-config:/config
+      - /data13/Music/deemix:/downloads
+volumes:
+  deemix-config:
